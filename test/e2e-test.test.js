@@ -13,7 +13,7 @@ describe('Suite de prueba end 2 end para el curso', () => {
         chai.request(app)
             .get('/')
             .end((err, res) => {
-                chai.assert.equal(res.text, 'Hello World')
+                chai.assert.equal(res.text, 'Hello World!')
                 done();
             });
     });
