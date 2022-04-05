@@ -1,4 +1,4 @@
-const bcrypt = require('./node_modules/bcrypt');
+const bcrypt = require('../node_modules/bcrypt');
 
 const hashPassword = (plainTextPwd, done) => {
     bcrypt.hash(plainTextPwd, 10,done);

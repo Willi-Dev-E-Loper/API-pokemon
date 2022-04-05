@@ -2,9 +2,9 @@ const express = require('express');
 const { route } = require('express/lib/application');
 const router = express.Router();
 const passport = require('passport');
-const teamController = require('../controllers/teams')
-const {getUser} = require('../controllers/users');
-require('../auth')(passport);
+const teamController = require('./teams.controller')
+const {getUser} = require('../auth/users.controller');
+require('../tools/auth')(passport);
 const axios = require('axios').default;
 
 router.route('/')

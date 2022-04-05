@@ -6,7 +6,7 @@ const chaiHttp= require('chai-http');
 //chaihttp nos permite utilizar los verbos de Http (POST, PUT ,GET..)
 chai.use(chaiHttp);
 
-const app = require('../app').app;
+const app = require('../../app').app;
 
 describe('Suite de prueba end 2 end para el curso', () => {
     it('should return hello world', (done) => {
