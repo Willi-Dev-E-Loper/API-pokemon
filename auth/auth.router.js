@@ -6,10 +6,7 @@ const router = express.Router();
 const authHttpHandlet = require('./auth.http');
 
 
-router.route('/')
-    .get(authHttpHandlet.getAuthRouter)
-    .post(authHttpHandlet.setAuthRouter)
 router.route('/login')
-    .post(authHttpHandlet.setLogin);
+    .post(authHttpHandlet.LoginUser);
 
     exports.router = router;

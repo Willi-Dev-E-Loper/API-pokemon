@@ -5,14 +5,7 @@ const usersController = require('./users.controller');
 
 
 
-const getAuthRouter = (req, res) => {
-        res.send('GET Auth router');
-    }
-const setAuthRouter= (req, res) => {
-        res.send('POST Auth router');
-    }
-
-const setLogin = (req, res) => {
+const LoginUser = (req, res) => {
         if (!req.body) {
             return res.status(400).json({message: 'Missing data'});
         } else if (!req.body.user || !req.body.password) {
@@ -33,8 +26,6 @@ const setLogin = (req, res) => {
         })
     };
 
-    exports.getAuthRouter= getAuthRouter;
-    exports.setAuthRouter=setAuthRouter;
-    exports.setLogin= setLogin;
+    exports.LoginUser= LoginUser;
 
     

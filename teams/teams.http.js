@@ -3,11 +3,12 @@ const teamsController = require('./teams.controller');
 const {getUser} = require('../auth/users.controller');
 const extractors = require('passport-jwt/lib/extract_jwt');
 
-const getTeamFromUser = (req, res) => {
+const getTeamFromUser = async (req, res) => {
     let user = getUser(req.user.userId);
+    let team = await teamsController.getTeamOfUser(req.user.userId);
     res.status(200).json({
         trainer: user.userName,
-        team: teamsController.getTeamOfUser(req.user.userId)
+        team: team
     })
 }
 
@@ -16,22 +17,20 @@ const setTeamToUser = (req, res ) => {
     res.status(200).send();
 }
 
-const addPokemonToTeam = (req, res) => {
+const addPokemonToTeam = async (req, res) => {
     let pokemonName = req.body.name;
-    axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`)
-        .then(function (response){
-            let pokemon = {
-                name: pokemonName,
-                pokedexNumber: response.data.id
-            }
-            teamsController.addPokemon(req.user.userId, pokemon);
+    let pokeApiResponse= await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`);
 
-            res.status(200).json(pokemon)
-        })
-        .catch(function (error) {
-            console.log(error)
-            res.status(400).json({message: error});
-        })
+    let pokemon = {
+        name: pokemonName,
+        pokedexNumber: pokeApiResponse.data.id
+    }
+    try{
+        await teamsController.addPokemon(req.user.userId, pokemon);
+        return res.status(201).json(pokemon);
+    } catch(error){
+        return res.status(400).json({message: 'You have already 6 pokemons'});
+    }
 }
 
 const  deletePokemonFromTeam = (req, res) => {
