@@ -1,7 +1,7 @@
-const bcrypt = require('../node_modules/bcrypt');
+const bcrypt = require('bcrypt');
 
 const hashPassword = (plainTextPwd, done) => {
-    bcrypt.hash(plainTextPwd, 10,done);
+    bcrypt.hash(plainTextPwd, 10, done);
 };
 
 const hashPasswordSync = (plainTextPwd) => {
@@ -9,7 +9,7 @@ const hashPasswordSync = (plainTextPwd) => {
 };
 
 const comparePassword = (plainPassword, hashPassword, done) => {
-    bcrypt.compare(plainPassword,hashPassword, done);
+    bcrypt.compare(plainPassword, hashPassword, done);
 };
 
 exports.hashPassword = hashPassword;

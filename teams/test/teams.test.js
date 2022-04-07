@@ -1,17 +1,22 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+
 chai.use(chaiHttp);
 const usersController = require('../../auth/users.controller');
 const teamsController = require('../teams.controller');
+
 const app = require('../../app').app;
-before((done) => {
-    usersController.registerUser('bettatech', '1234');
-    usersController.registerUser('mastermind', '4321');
-    done();
+
+beforeEach(async () => {
+    await usersController.registerUser('bettatech', '1234');
+    await usersController.registerUser('mastermind', '4321');
 })
+
 afterEach(async () => {
+    await usersController.cleanUpUsers();
     await teamsController.cleanUpTeam();
 })
+
 describe('Suite de pruebas teams', () => {
     it('should return the team of the given user', (done) => {
         // Cuando la llamada no tiene correctamente la llave
@@ -48,7 +53,7 @@ describe('Suite de pruebas teams', () => {
             });
     });
 
-    it('should remove the pokemon at index', (done) => {
+    it('should return the pokedex number', (done) => {
         let team = [{name: 'Charizard'}, {name: 'Blastoise'}, {name: 'Pikachu'}];
         chai.request(app)
             .post('/auth/login')
@@ -82,8 +87,8 @@ describe('Suite de pruebas teams', () => {
                     });
             });
     });
-   
-    it('should return the pokedex number', (done) => {
+
+    it('should remove the pokemon at index', (done) => {
         // Cuando la llamada no tiene correctamente la llave
         let pokemonName = 'Bulbasaur';
         chai.request(app)
@@ -115,7 +120,8 @@ describe('Suite de pruebas teams', () => {
                     });
             });
     });
-    it(' should not be able to add pokemon if you already have 6', (done) => {
+
+    it('should not be able to add pokemon if you already have 6', (done) => {
         let team = [
             {name: 'Charizard'}, 
             {name: 'Blastoise'}, 
@@ -137,19 +143,15 @@ describe('Suite de pruebas teams', () => {
                     .set('Authorization', `JWT ${token}`)
                     .end((err, res) => {
                         chai.request(app)
-                        .post('/teams/pokemons')
-                        .send({name: 'Eevee '})
-                        .set('Authorization', `JWT ${token}`)
-                        .end((err, res) => {
-                            chai.assert.equal(res.statusCode, 400);
-                            done();
-                        });
-                       
+                            .post('/teams/pokemons')
+                            .send({name: 'Vibrava'})
+                            .set('Authorization', `JWT ${token}`)
+                            .end((err, res) => {
+                                chai.assert.equal(res.statusCode, 400);
+                                done();
+                            });
                     });
             });
     });
-});
-after((done) => {
-    usersController.cleanUpUsers();
-    done();
+
 });

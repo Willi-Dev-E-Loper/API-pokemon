@@ -1,7 +1,6 @@
-const JwtStrategy = require('passport-jwt').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt;
 const passport = require('passport');
-
 
 const init = () => {
     const opts = {
@@ -12,11 +11,13 @@ const init = () => {
         return done(null, decoded);
     }));
 }
+
 const protectWithJwt = (req, res, next) => {
-    if(req.path == '/' || req.path == '/auth/login') {
+    if (req.path == '/' || req.path == '/auth/login') {
         return next();
     }
-    return passport.authenticate('jwt', { session: false})(req, res, next);
+    return passport.authenticate('jwt', { session: false })(req, res, next);
 }
-exports.init=init;
-exports.protectWithJwt=protectWithJwt;
+
+exports.init = init;
+exports.protectWithJwt = protectWithJwt;

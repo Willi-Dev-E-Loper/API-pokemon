@@ -1,17 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const teamsHttpHandlet = require('./teams.http');
 
+const teamsHttpHandler = require('./teams.http');
 
 router.route('/')
-    .get(teamsHttpHandlet.getTeamFromUser)
-    .put(teamsHttpHandlet.setTeamToUser)
-    
+    .get(teamsHttpHandler.getTeamFromUser)
+    .put(teamsHttpHandler.setTeamToUser)
+
 router.route('/pokemons')
-    .post(teamsHttpHandlet.addPokemonToTeam);
-    
+    .post(teamsHttpHandler.addPokemonToTeam)
+
 router.route('/pokemons/:pokeid')
-    .delete(teamsHttpHandlet.deletePokemonFromTeam)
+    .delete(teamsHttpHandler.deletePokemonFromTeam)
 
 exports.router = router;
-

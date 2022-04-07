@@ -1,6 +1,5 @@
-const authmiddleware = require('./tools/auth-middleware')
+const authmiddleware = require('./tools/auth-middleware');
 const bodyParser = require('body-parser');
-
 
 const setupMiddlewares = (app) => {
     app.use(bodyParser.json());
