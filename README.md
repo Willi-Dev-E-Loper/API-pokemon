@@ -1,5 +1,5 @@
 #Objetivo:
-Definir una API para fgestionar nuetro equipo pokemon
+Definir una API para gestionar nuetro equipo pokemon
 
 #Aciones:
 -Identificarnos
